@@ -11,5 +11,10 @@ public class Coord {
         this.colonne=colonne;
     }
 
+    public Coord(){
+        this.ligne = -1;
+        this.colonne = -1;
+    }
+
     
 }

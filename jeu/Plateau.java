@@ -1,5 +1,7 @@
 package jeu;
 
+import move.Coord;
+import move.Move;
 import piece.Cavalier;
 import piece.Fou;
 import piece.Pion;
@@ -18,7 +20,7 @@ public class Plateau {
     public Plateau(){
         for (short ligne=0; ligne<DIMENSION; ligne++ ){
             for (short  colonne=0; colonne<DIMENSION; colonne++){
-                setPiece(ligne, colonne, new Piece(PieceEtat.VIDE));
+                setPiece(ligne, colonne, new Piece());
             }
         }
         plateauReset();
@@ -39,7 +41,7 @@ public class Plateau {
 
         for (short ligne=2; ligne<DIMENSION-2; ligne++ ){
             for (short colonne=0; colonne<DIMENSION; colonne++){
-                setPiece(ligne, colonne, new Piece(PieceEtat.VIDE));
+                setPiece(ligne, colonne, new Piece());
             }
         }
 
@@ -100,12 +102,12 @@ public class Plateau {
 
 
     /** déplacer une piece sur le plateau */
-    protected void deplacerPiece(short ligneDep, short colonneDep, short ligneAr, short colonneAr ){
-        this.plateau[ligneAr][colonneAr] = this.plateau[ligneDep][colonneDep];
-        this.plateau[ligneDep][colonneDep] = new Piece(PieceEtat.VIDE);
+    protected void deplacerPiece(Coord depart, Coord arriver ){
+        this.plateau[arriver.ligne][arriver.colonne] = this.plateau[depart.ligne][depart.colonne];
+        this.plateau[depart.ligne][depart.colonne] = new Piece();
         // permet de retirer le coup de 2 cases si le pion est jouer
-        if ( this.plateau[ligneAr][colonneAr] instanceof Pion) { 
-            Pion pion = (Pion) this.plateau[ligneAr][colonneAr];
+        if ( this.plateau[arriver.ligne][arriver.colonne] instanceof Pion) { 
+            Pion pion = (Pion) this.plateau[arriver.ligne][arriver.colonne];
             pion.setJouer();
         }
     }
@@ -116,4 +118,57 @@ public class Plateau {
         return false;
     }
 
+    /** récupere la position d'un roi d'une couleur */
+    protected Coord getRoiInfo(short couleur){
+        boolean trouver = false;
+        Coord roi = new Coord(); //evite le warning pas initialiser
+        //parcours le plateau pour chercher le roi de la couleur
+        for (short ligne=0; ligne<DIMENSION; ligne++ ){
+            for (short  colonne=0; colonne<DIMENSION; colonne++){
+                if (plateau[ligne][colonne] instanceof Roi ) {
+                    if (couleur == plateau[ligne][colonne].getCouleur()){
+                        roi = new Coord(ligne, colonne);
+                        trouver = true;
+                    }
+                }
+            }
+        }
+        //si pas trouver pas de roi donc quitter
+        if (!trouver) {
+            System.out.println("Erreur : il manque un roi");
+            return null;
+        }
+        return roi;
+
+    }
+
+    /** renvoie si le roi d'une couleur est en echec ou non */
+    protected boolean isEchec(short couleur){
+        Coord roi = getRoiInfo(couleur);
+        if (roi == null) {System.out.println("roi null"); return false;}
+        if (estMenacer(roi)) return true;
+        return false;
+    }
+
+    /**regarde si la piece est menacer par une des piece adverse */
+    protected boolean estMenacer(Coord piece){
+        Piece pieceTempo;
+        Piece pieceMenacer = plateau[piece.ligne][piece.colonne];
+
+        for (short ligne=0; ligne<DIMENSION; ligne++ ){
+            for (short  colonne=0; colonne<DIMENSION; colonne++){
+                pieceTempo = plateau[ligne][colonne];
+                //si la piece ne peut pas  manger  la piece menacer alors on break
+                if (pieceTempo.isMangeable(pieceMenacer)) {
+                    if ( pieceTempo.coupPossible(this, new Move(new Coord(ligne,colonne), piece ) ) ) return true;
+                }
+                //test si la pieceMenacer est dans les coups possibles de piece tempo
+            }
+        }  return false;  
+    }
+
+    //regarde si la piece est menacer 
+    protected boolean estMenacer(Move move){
+        return (plateau[move.to.ligne][move.to.colonne].coupPossible(this, move ));
+    }
 }

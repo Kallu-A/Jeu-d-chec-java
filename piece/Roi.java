@@ -8,7 +8,6 @@ public class Roi extends Piece {
    
     private boolean jamaisRoque = true;
     private boolean echecMat = false;
-    private boolean echec = false;
 
     public static final short[][] VECTEUR_ROI = { {1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
 
@@ -28,19 +27,11 @@ public class Roi extends Piece {
 
     public void setEchecMat(){
         this.echecMat = true;
-        this.echec = true;
     }
 
-    public void setEchec(boolean etat){
-        this.echec= etat;
-    }
 
     public boolean getEchecMat(){
         return this.echecMat;
-    }
-
-    public boolean getEchec(){
-        return this.echec;
     }
 
     @Override
