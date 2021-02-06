@@ -16,27 +16,37 @@ public class Fou extends Piece {
     }
 
     @Override
-    public boolean coupPossible(Plateau plateau, short ligneDep, short colonneDep, short ligneAr, short colonneAr){
+    public boolean coupPossible(Plateau plateau, Move move){
         short[][] toutVecteur = Fou.getVecteurDeplacement();
-        short[] positionPiece = {ligneDep, colonneDep};
-        short ligne, colonne ,i;
+        short ligne, colonne ,i, ligneAr, ligneDep, colonneAr, colonneDep;
+        ligneDep = move.getLigneDep();
+        ligneAr = move.getLigneAr();
+        colonneAr = move.getColonneAr();
+        colonneDep = move.getColonneDep();
+        //calcul des chemins 
         for (short[]  vecteur : toutVecteur) {
             i=1;
+            //pour avoir plus qu'une case de profondeur
             while (true){
-                ligne = (short) (positionPiece[0] + i * vecteur[0]);
-                colonne = (short) (positionPiece[1] + i * vecteur[1]);
+                //position obtenu en passant par le vecteur
+                ligne = (short) (ligneDep + i * vecteur[0]);
+                colonne = (short) (colonneDep + i * vecteur[1]);
                 if (Plateau.isDansPlateau(ligne, colonne) ){
-                    if (plateau.plateau[positionPiece[0]][positionPiece[1]].isPlaceLibre(plateau.plateau[ligne][colonne])){
+                    //si il n'y a pas de piece
+                    if ( plateau.getPiece(ligneDep, colonneDep).isPlaceLibre( plateau.getPiece(ligne, colonne) ) ){
+                        //les coordonées d'arriver et du chemin calculé sont égal alors c'est possible
                         if (ligneAr == ligne && colonneAr == colonne) return true;
                     } else {
-                        if (plateau.plateau[positionPiece[0]][positionPiece[1]].isMangeable(plateau.plateau[ligneAr][colonneAr])
-                        && ligneAr == ligne && colonneAr == colonne) return true;
+                        //si la place n'est pas pas vide 
+                        //test si elle est mangeable couleur opposé et coordonée du chemin correspond sinon on break
+                        if ( plateau.getPiece(ligneDep, colonneDep).isMangeable( plateau.getPiece(ligneAr, colonneAr) )
+                        && ligneAr == ligne && colonneAr == colonne ) return true;
                         break;
                     }
+                    //si ont sort du plateau on break
                 } else break; 
                 i++;
             }
-
         }
         return false;
     }

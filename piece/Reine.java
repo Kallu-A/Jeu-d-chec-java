@@ -11,20 +11,28 @@ public class Reine extends Piece {
     }
     
     @Override
-    public boolean coupPossible(Plateau plateau, short ligneDep, short colonneDep, short ligneAr, short colonneAr){
+    public boolean coupPossible(Plateau plateau, Move move){
+        //même vecteur que le roi mais sans limite de distance
         short[][] toutVecteur = Roi.getVecteurDeplacement();
-        short[] positionPiece = {ligneDep, colonneDep};
-        short ligne, colonne, i;
+        short ligne, colonne ,i, ligneAr, ligneDep, colonneAr, colonneDep;
+        ligneDep = move.getLigneDep();
+        ligneAr = move.getLigneAr();
+        colonneAr = move.getColonneAr();
+        colonneDep = move.getColonneDep();
+        //calcul des vecteurs
         for (short[]  vecteur : toutVecteur) {
             i=1;
             while (true){
-                ligne = (short) (positionPiece[0] + i * vecteur[0]);
-                colonne = (short) (positionPiece[1] + i * vecteur[1]);
+                ligne = (short) (ligneDep + i * vecteur[0]);
+                colonne = (short) (colonneDep + i * vecteur[1]);
                 if (Plateau.isDansPlateau(ligne, colonne) ){
-                    if (plateau.plateau[positionPiece[0]][positionPiece[1]].isPlaceLibre(plateau.plateau[ligne][colonne])){
+                    // test si la place est libre 
+                    if ( plateau.getPiece(ligneDep, colonneDep).isPlaceLibre( plateau.getPiece(ligne, colonne) ) ){
+                        //si la position du vecteur rejoins celle de l'arriver alors possible
                         if (ligneAr == ligne && colonneAr == colonne) return true;
                     } else {
-                        if (plateau.plateau[positionPiece[0]][positionPiece[1]].isMangeable(plateau.plateau[ligneAr][colonneAr])
+                        //si il y'a une piece test si elle est mangeable et si le vecteur rejoins l'arriver si oui alors vrai sinon break;
+                        if (plateau.getPiece(ligneDep, colonneDep).isMangeable(plateau.getPiece(ligneAr, colonneAr) )
                             && ligneAr == ligne && colonneAr == colonne) return true;
                         break;
                     }

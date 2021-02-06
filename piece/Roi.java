@@ -45,15 +45,21 @@ public class Roi extends Piece {
     }
 
     @Override
-    public boolean coupPossible(Plateau plateau, short ligneDep, short colonneDep, short ligneAr, short colonneAr){
+    public boolean coupPossible(Plateau plateau, Move move){
         short[][] toutVecteur = Roi.getVecteurDeplacement();
-        short[] positionPiece = {ligneDep, colonneDep};
-        short ligne, colonne;
+        short ligne, colonne, ligneAr, ligneDep, colonneAr, colonneDep;
+        ligneDep = move.getLigneDep();
+        ligneAr = move.getLigneAr();
+        colonneAr = move.getColonneAr();
+        colonneDep = move.getColonneDep();
+        //test des vecteurs
         for (short[]  vecteur : toutVecteur) {
-            ligne = (short) (positionPiece[0] + vecteur[0]);
-            colonne = (short) (positionPiece[1] + vecteur[1]);
+            //coordonée du roi après le vecteur
+            ligne = (short) (ligneDep + vecteur[0]);
+            colonne = (short) (colonneDep + vecteur[1]);
             if (Plateau.isDansPlateau(ligne, colonne) ){
-                if (plateau.plateau[positionPiece[0]][positionPiece[1]].isPlaceAcessible(plateau.plateau[ligne][colonne])){
+                //si est dans le plateau et pas de la même couleur alors le coup est possible
+                if (plateau.getPiece(ligneDep, colonneDep).isPlaceAcessible(plateau.getPiece(ligne, colonne))){
                     if (ligneAr == ligne && colonneAr == colonne) return true;
                 }
             }

@@ -45,7 +45,7 @@ public class Piece {
     public boolean isPlaceLibre(Piece pieceViser){
         return ( pieceViser.getCouleur() == PieceEtat.VIDE);
     }
-    public boolean coupPossible(Plateau plateau, short ligneDep, short colonneDep, short ligneAr, short colonneAr){
+    public boolean coupPossible(Plateau plateau, Move move){
         return false;
     }
 

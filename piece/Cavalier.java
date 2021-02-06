@@ -17,9 +17,13 @@ public class Cavalier extends Piece{
     }
 
     @Override
-    public boolean coupPossible(Plateau plateau, short ligneDep, short colonneDep, short ligneAr, short colonneAr){
+    public boolean coupPossible(Plateau plateau, Move move){
         short[][] toutVecteur = Cavalier.getVecteurDeplacement();
-        short ligne, colonne;
+        short ligne, colonne, ligneAr, ligneDep, colonneAr, colonneDep;
+        ligneDep = move.getLigneDep();
+        ligneAr = move.getLigneAr();
+        colonneAr = move.getColonneAr();
+        colonneDep = move.getColonneDep();
         //calcul des chemins possibles
         for (short[]  vecteur : toutVecteur) {
             ligne = (short) (ligneDep + vecteur[0]);

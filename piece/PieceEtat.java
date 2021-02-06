@@ -1,5 +1,6 @@
 package piece;
 
+/** contient chaque piece ou couleur est sa valeur */
 public class PieceEtat {
 
     static public final String ROINOIR = "♚";
