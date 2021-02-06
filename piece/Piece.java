@@ -1,6 +1,7 @@
 package piece;
 
 import jeu.Plateau;
+import move.Move;
 
 /** Piece d'un jeu d'échec */
 public class Piece {

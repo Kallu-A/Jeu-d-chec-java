@@ -1,6 +1,8 @@
 package piece;
 
 import jeu.Plateau;
+import move.Coord;
+import move.Move;
 
 public class Roi extends Piece {
    
@@ -44,20 +46,18 @@ public class Roi extends Piece {
     @Override
     public boolean coupPossible(Plateau plateau, Move move){
         short[][] toutVecteur = VECTEUR_ROI;
-        short ligne, colonne, ligneAr, ligneDep, colonneAr, colonneDep;
-        ligneDep = move.getLigneDep();
-        ligneAr = move.getLigneAr();
-        colonneAr = move.getColonneAr();
-        colonneDep = move.getColonneDep();
+        short ligne, colonne;
+        Coord to = move.to;
+        Coord from = move.from;
         //test des vecteurs
         for (short[]  vecteur : toutVecteur) {
             //coordonée du roi après le vecteur
-            ligne = (short) (ligneDep + vecteur[0]);
-            colonne = (short) (colonneDep + vecteur[1]);
+            ligne = (short) (to.ligne + vecteur[0]);
+            colonne = (short) (to.colonne + vecteur[1]);
             if (Plateau.isDansPlateau(ligne, colonne) ){
                 //si est dans le plateau et pas de la même couleur alors le coup est possible
-                if (plateau.getPiece(ligneDep, colonneDep).isPlaceAcessible(plateau.getPiece(ligne, colonne))){
-                    if (ligneAr == ligne && colonneAr == colonne) return true;
+                if (plateau.getPiece(to.ligne, to.colonne).isPlaceAcessible(plateau.getPiece(ligne, colonne))){
+                    if (from.ligne == ligne && from.colonne == colonne) return true;
                 }
             }
         }

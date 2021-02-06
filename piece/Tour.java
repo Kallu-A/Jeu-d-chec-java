@@ -1,6 +1,8 @@
 package piece;
 
 import jeu.Plateau;
+import move.Coord;
+import move.Move;
 
 public class Tour extends Piece {
 
@@ -15,29 +17,26 @@ public class Tour extends Piece {
     @Override
     public boolean coupPossible(Plateau plateau, Move move){
         short[][] toutVecteur = VECTEUR_TOUR;
-        short ligne, colonne ,i, ligneAr, ligneDep, colonneAr, colonneDep;
-        ligneDep = move.getLigneDep();
-        ligneAr = move.getLigneAr();
-        colonneAr = move.getColonneAr();
-        colonneDep = move.getColonneDep();
-
+        short ligne, colonne ,i;
+        Coord to = move.to;
+        Coord from = move.from;
         //test des vecteurs
         for (short[]  vecteur : toutVecteur) {
             i=1;
             while (true){
                 //postion de la tour avec le vecteur
-                ligne = (short) (ligneDep + i * vecteur[0]);
-                colonne = (short) (colonneDep + i * vecteur[1]);
+                ligne = (short) (to.ligne + i * vecteur[0]);
+                colonne = (short) (to.colonne + i * vecteur[1]);
 
                 if (Plateau.isDansPlateau(ligne, colonne) ){
                     //si la place est libre 
-                    if ( plateau.getPiece(ligneDep, colonneDep).isPlaceLibre( plateau.getPiece(ligne, colonne) ) ){
+                    if ( plateau.getPiece(to.ligne, to.colonne).isPlaceLibre( plateau.getPiece(ligne, colonne) ) ){
                         //si coordonées correrspondent avec celle d'arriver alors coup vrai
-                        if (ligneAr == ligne && colonneAr == colonne) return true;
+                        if (from.ligne == ligne && from.colonne == colonne) return true;
                     } else {
                         //test si la piece est mangeable et math avec l'arriver 
-                        if (plateau.getPiece(ligneDep, colonneDep).isMangeable( plateau.getPiece(ligneAr, colonneAr) )
-                        && ligneAr == ligne && colonneAr == colonne) return true;
+                        if (plateau.getPiece(to.ligne, to.colonne).isMangeable( plateau.getPiece(from.ligne, from.colonne) )
+                        && from.ligne == ligne && from.colonne == colonne) return true;
                         //Si pas mangeable ou match pas on break le vecteur la 
                         break;
                     }

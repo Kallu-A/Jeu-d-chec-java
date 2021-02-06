@@ -1,6 +1,7 @@
 package jeu;
 
-import piece.Move;
+import move.Coord;
+import move.Move;
 import piece.PieceEtat;
 import terminal.KTerminal;
 
@@ -66,7 +67,7 @@ public class JeuEchec extends Plateau{
                     else {
                         //test si le coup est possible ou non par la pièce
                         if (! this.plateau[coordDepart[0]][coordDepart[1]].coupPossible( this,
-                             new Move(coordDepart[0], coordDepart[1], coordArriver[0], coordArriver[1]) ) )  System.out.println("La piêce ne peut pas faire ca");
+                             new Move(new Coord(coordDepart[0], coordDepart[1]), new Coord(coordArriver[0], coordArriver[1])) ) )  System.out.println("La piêce ne peut pas faire ca");
                         else break;
                         //si on arrive ici les conditions sont toutes bonnes et on break le while
                     }

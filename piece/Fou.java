@@ -1,6 +1,8 @@
 package piece;
 
 import jeu.Plateau;
+import move.Coord;
+import move.Move;
 
 public class Fou extends Piece {
 
@@ -15,29 +17,27 @@ public class Fou extends Piece {
     @Override
     public boolean coupPossible(Plateau plateau, Move move){
         short[][] toutVecteur = VECTEUR_FOU;
-        short ligne, colonne ,i, ligneAr, ligneDep, colonneAr, colonneDep;
-        ligneDep = move.getLigneDep();
-        ligneAr = move.getLigneAr();
-        colonneAr = move.getColonneAr();
-        colonneDep = move.getColonneDep();
+        short ligne, colonne ,i;
+        Coord to = move.to;
+        Coord from = move.from;
         //calcul des chemins 
         for (short[]  vecteur : toutVecteur) {
             i=1;
             //pour avoir plus qu'une case de profondeur
             while (true){
                 //position obtenu en passant par le vecteur
-                ligne = (short) (ligneDep + i * vecteur[0]);
-                colonne = (short) (colonneDep + i * vecteur[1]);
+                ligne = (short) (to.ligne + i * vecteur[0]);
+                colonne = (short) (to.colonne + i * vecteur[1]);
                 if (Plateau.isDansPlateau(ligne, colonne) ){
                     //si il n'y a pas de piece
-                    if ( plateau.getPiece(ligneDep, colonneDep).isPlaceLibre( plateau.getPiece(ligne, colonne) ) ){
+                    if ( plateau.getPiece(to.ligne, to.colonne).isPlaceLibre( plateau.getPiece(ligne, colonne) ) ){
                         //les coordonées d'arriver et du chemin calculé sont égal alors c'est possible
-                        if (ligneAr == ligne && colonneAr == colonne) return true;
+                        if (from.ligne == ligne && from.colonne == colonne) return true;
                     } else {
                         //si la place n'est pas pas vide 
                         //test si elle est mangeable couleur opposé et coordonée du chemin correspond sinon on break
-                        if ( plateau.getPiece(ligneDep, colonneDep).isMangeable( plateau.getPiece(ligneAr, colonneAr) )
-                        && ligneAr == ligne && colonneAr == colonne ) return true;
+                        if ( plateau.getPiece(to.ligne, to.colonne).isMangeable( plateau.getPiece(from.ligne, from.colonne) )
+                        && from.ligne == ligne && from.colonne == colonne ) return true;
                         break;
                     }
                     //si ont sort du plateau on break

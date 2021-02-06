@@ -1,6 +1,8 @@
 package piece;
 
 import jeu.Plateau;
+import move.Coord;
+import move.Move;
 
 public class Cavalier extends Piece{
 
@@ -16,20 +18,18 @@ public class Cavalier extends Piece{
     @Override
     public boolean coupPossible(Plateau plateau, Move move){
         short[][] toutVecteur = VECTEUR_CAVALIER;
-        short ligne, colonne, ligneAr, ligneDep, colonneAr, colonneDep;
-        ligneDep = move.getLigneDep();
-        ligneAr = move.getLigneAr();
-        colonneAr = move.getColonneAr();
-        colonneDep = move.getColonneDep();
+        short ligne, colonne;
+        Coord to = move.to;
+        Coord from = move.from;
         //calcul des chemins possibles
         for (short[]  vecteur : toutVecteur) {
-            ligne = (short) (ligneDep + vecteur[0]);
-            colonne = (short) (colonneDep + vecteur[1]);
+            ligne = (short) (to.ligne + vecteur[0]);
+            colonne = (short) (to.colonne + vecteur[1]);
             //cordonnés du coup arriver
             if ( Plateau.isDansPlateau(ligne, colonne) ){
                 //test si la piece d'arriver est accessible pour la piece de départ 
-                if ( plateau.getPiece( ligneDep, colonneDep ).isPlaceAcessible( plateau.getPiece(ligne, colonne) ) ) {
-                    if (ligneAr == ligne && colonneAr == colonne) return true;
+                if ( plateau.getPiece( to.ligne, to.colonne ).isPlaceAcessible( plateau.getPiece(ligne, colonne) ) ) {
+                    if (from.ligne == ligne && from.colonne == colonne) return true;
                 }
             }
         }
