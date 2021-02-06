@@ -8,6 +8,8 @@ public class Roi extends Piece {
     private boolean echecMat = false;
     private boolean echec = false;
 
+    public static final short[][] VECTEUR_ROI = { {1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
+
     public Roi(short couleur){
         super(couleur);
         if (couleur == PieceEtat.NOIR) super.setEtat(PieceEtat.ROINOIR);
@@ -39,14 +41,9 @@ public class Roi extends Piece {
         return this.echec;
     }
 
-    public static short[][] getVecteurDeplacement(){
-        short[][] vecteur = { {1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
-        return  vecteur;
-    }
-
     @Override
     public boolean coupPossible(Plateau plateau, Move move){
-        short[][] toutVecteur = Roi.getVecteurDeplacement();
+        short[][] toutVecteur = VECTEUR_ROI;
         short ligne, colonne, ligneAr, ligneDep, colonneAr, colonneDep;
         ligneDep = move.getLigneDep();
         ligneAr = move.getLigneAr();

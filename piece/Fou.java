@@ -4,20 +4,17 @@ import jeu.Plateau;
 
 public class Fou extends Piece {
 
+    public static final short[][] VECTEUR_FOU = { {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
+
     public Fou(short couleur){
         super(couleur);
         if (couleur == PieceEtat.NOIR) super.setEtat(PieceEtat.FOUNOIR);
         else super.setEtat(PieceEtat.FOUBLANC);
     }
 
-    public static short[][] getVecteurDeplacement(){
-        short[][] vecteur = { {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
-        return  vecteur;
-    }
-
     @Override
     public boolean coupPossible(Plateau plateau, Move move){
-        short[][] toutVecteur = Fou.getVecteurDeplacement();
+        short[][] toutVecteur = VECTEUR_FOU;
         short ligne, colonne ,i, ligneAr, ligneDep, colonneAr, colonneDep;
         ligneDep = move.getLigneDep();
         ligneAr = move.getLigneAr();

@@ -4,21 +4,18 @@ import jeu.Plateau;
 
 public class Cavalier extends Piece{
 
+    public static final short[][] VECTEUR_CAVALIER = { {2, 1}, {2, -1}, {-2, 1}, {-2, -1},
+                                                     {-1, -2}, {1, -2}, {1, 2}, {-1, 2}};
+
     public Cavalier(short couleur){
         super(couleur);
         if (couleur == PieceEtat.NOIR) super.setEtat(PieceEtat.CAVALIERNOIR);
         else super.setEtat(PieceEtat.CAVALIERBLANC);
     }
 
-    public static short[][] getVecteurDeplacement(){
-        short[][] vecteur = { {2, 1}, {2, -1}, {-2, 1}, {-2, -1},
-                            {-1, -2}, {1, -2}, {1, 2}, {-1, 2}};
-        return  vecteur;
-    }
-
     @Override
     public boolean coupPossible(Plateau plateau, Move move){
-        short[][] toutVecteur = Cavalier.getVecteurDeplacement();
+        short[][] toutVecteur = VECTEUR_CAVALIER;
         short ligne, colonne, ligneAr, ligneDep, colonneAr, colonneDep;
         ligneDep = move.getLigneDep();
         ligneAr = move.getLigneAr();

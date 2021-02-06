@@ -3,6 +3,8 @@ package piece;
 import jeu.Plateau;
 
 public class Tour extends Piece {
+
+    public static final short[][] VECTEUR_TOUR = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
     
     public Tour(short couleur){
         super(couleur);
@@ -10,15 +12,9 @@ public class Tour extends Piece {
         else super.setEtat(PieceEtat.TOURBLANC);
     }
 
-    public static short[][] getVecteurDeplacement(){
-        short[][] vecteur = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
-        return  vecteur;
-    }
-
-
     @Override
     public boolean coupPossible(Plateau plateau, Move move){
-        short[][] toutVecteur = Tour.getVecteurDeplacement();
+        short[][] toutVecteur = VECTEUR_TOUR;
         short ligne, colonne ,i, ligneAr, ligneDep, colonneAr, colonneDep;
         ligneDep = move.getLigneDep();
         ligneAr = move.getLigneAr();

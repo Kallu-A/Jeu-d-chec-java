@@ -13,7 +13,7 @@ public class Reine extends Piece {
     @Override
     public boolean coupPossible(Plateau plateau, Move move){
         //même vecteur que le roi mais sans limite de distance
-        short[][] toutVecteur = Roi.getVecteurDeplacement();
+        short[][] toutVecteur = Roi.VECTEUR_ROI;
         short ligne, colonne ,i, ligneAr, ligneDep, colonneAr, colonneDep;
         ligneDep = move.getLigneDep();
         ligneAr = move.getLigneAr();
