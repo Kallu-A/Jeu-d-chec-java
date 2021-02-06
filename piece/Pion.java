@@ -30,7 +30,7 @@ public class Pion extends Piece {
 
     /** calcul des coups possibles du pion */
     private boolean coupCalculPossible(Plateau plateau, Move move, short couleur, boolean jamaisJouer){
-        short ligneAr, ligneDep, colonneAr, colonneDep, ligne, direction;
+        short ligneAr, ligneDep, colonneAr, colonneDep,  direction;
         ligneDep = move.getLigneDep();
         ligneAr = move.getLigneAr();
         colonneAr = move.getColonneAr();
@@ -40,17 +40,13 @@ public class Pion extends Piece {
         //test de la colonne
         if (colonneAr == colonneDep ){
             //calcul des possiblités
-            for (ligne = (short) (ligneDep+direction) ; ligne <= ligneAr; ligne++){
 
-                if (Plateau.isDansPlateau(ligne, colonneDep) ){
-                    //si la place est libre sinon break
-                    if ( plateau.getPiece(ligneDep, colonneDep).isPlaceLibre( plateau.getPiece(ligne, colonneDep) ) ){
-                        //test pour le premier coup de 2case
-                        if (jamaisJouer && ligneAr == ligne && colonneAr == colonneDep && ligneDep+ (2* direction) == ligneAr) return true;
-                        //test pour un coup unique
-                        if (ligneAr == ligne && colonneAr == colonneDep && ligneAr-ligneDep == direction) return true; 
-                    } else break;
-                } else break;
+           //test pour le premier coup de 1case                  
+            if ( plateau.getPiece(ligneDep, colonneDep).isPlaceLibre( plateau.getPiece( (short) (ligneDep + direction), colonneDep) ) ){
+            if (colonneAr == colonneDep && ligneAr-ligneDep == direction) return true; 
+            if ( plateau.getPiece(ligneDep, colonneDep).isPlaceLibre( plateau.getPiece( (short) (ligneDep + 2 * direction), colonneDep) ) ){
+                if (jamaisJouer && colonneAr == colonneDep && ligneDep+ (2* direction) == ligneAr) return true;
+            } 
             }
         } else {
         //cas ou on mange test si la colonne est bien adjacente 
