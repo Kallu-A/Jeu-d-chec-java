@@ -1,5 +1,6 @@
 package move;
 
+import jeu.Dictionnaire;
 
 /** coordonée composé de deux valeur */
 public class Coord {
@@ -25,14 +26,21 @@ public class Coord {
         char setColonneChar = stringCoord.charAt(0);
         try {
             setLigne = Integer.parseInt(String.valueOf(setLigneChar));
-            setColonne = Integer.parseInt(String.valueOf(setColonneChar));
+            setColonne = Dictionnaire.dic.get(Character.toUpperCase(setColonneChar));
         } catch (NumberFormatException e){
             this.ligne = VALEUR_INVALIDE;
             this.colonne = VALEUR_INVALIDE;
             return;
+        } catch (NullPointerException e){
+            this.ligne = VALEUR_INVALIDE;
+            this.colonne = VALEUR_INVALIDE;
+            return;  
         }
         this.ligne = (short)( setLigne -1);
-        this.colonne = (short)( setColonne -1);
+        this.colonne = (short)( setColonne );
     }
     
+    public String toString(){
+        return "Coord avec ligne ="+this.ligne + " colonne ="+this.colonne;
+    }
 }
