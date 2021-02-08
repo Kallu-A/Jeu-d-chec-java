@@ -85,7 +85,7 @@ public class Plateau {
 
     /** affiche le plateau */
     public void afficherPlateau(){
-        System.out.println("    1  2  3  4  5  6  7  8");
+        System.out.println("    A  B  C  D  E  F  G  H");
         System.out.println("  --------------------------");
         for (short ligne=0; ligne<DIMENSION; ligne++ ){
             System.out.print(ligne+1 +" |");
@@ -97,7 +97,7 @@ public class Plateau {
             System.out.println(" | "+(ligne+1));
         }
         System.out.println("   -------------------------");
-        System.out.println("    1  2  3  4  5  6  7  8");
+        System.out.println("    A  B  C  D  E  F  G  H");
     }
 
 

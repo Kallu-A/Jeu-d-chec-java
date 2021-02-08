@@ -35,4 +35,18 @@ public class KTerminal {
     static public void fermerScanner(){
         input.close();
     }
+
+    /** récupère un string */
+    static public String getString(String afficher){
+        String val;
+        do {
+                System.out.println(afficher);
+                System.out.print("--> ");
+                val = input.nextLine();
+                if (val.length() >= 2) break;
+                System.out.println("Il faut au moins la colonne et la ligne");
+        } while (true); 
+        return val;
+    }
+
 }

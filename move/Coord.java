@@ -5,6 +5,8 @@ package move;
 public class Coord {
 
     public short ligne ,colonne ;
+    static public final short VALEUR_INVALIDE = -1;
+
 
     public Coord(short ligne, short colonne){
         this.ligne=ligne;
@@ -12,9 +14,25 @@ public class Coord {
     }
 
     public Coord(){
-        this.ligne = -1;
-        this.colonne = -1;
+        this.ligne = VALEUR_INVALIDE;
+        this.colonne = VALEUR_INVALIDE;
     }
 
+    /** met la coord au valeur d'un string */
+    public void setStringToCoord(String stringCoord){
+        int setLigne, setColonne;
+        char setLigneChar = stringCoord.charAt(1);
+        char setColonneChar = stringCoord.charAt(0);
+        try {
+            setLigne = Integer.parseInt(String.valueOf(setLigneChar));
+            setColonne = Integer.parseInt(String.valueOf(setColonneChar));
+        } catch (NumberFormatException e){
+            this.ligne = VALEUR_INVALIDE;
+            this.colonne = VALEUR_INVALIDE;
+            return;
+        }
+        this.ligne = (short)( setLigne -1);
+        this.colonne = (short)( setColonne -1);
+    }
     
 }

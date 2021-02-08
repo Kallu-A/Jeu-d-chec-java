@@ -3,6 +3,7 @@ package move;
 /** un deplacement constitué de deux coordonnee  */
 public class Move {
 
+
     public Coord to, from;
 
     public Move(Coord to, Coord from){

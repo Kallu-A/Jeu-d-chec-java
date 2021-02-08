@@ -20,20 +20,22 @@ public class JeuEchec extends Plateau{
     private Coord getCoord(String afficher){
         boolean valide;
         Coord coord = new Coord();
+        String coordString;
         do {
-            System.out.println(afficher);
             valide = true;
-            coord.ligne = (short) (KTerminal.getValeur("Rentrer la ligne de votre case") -1);
-            coord.colonne = (short) (KTerminal.getValeur("Rentrer la colonne de votre case") -1);
+            coordString = KTerminal.getString(afficher);
+            coord.setStringToCoord(coordString);
             //test validité
-            if (coord.ligne>=DIMENSION || coord.ligne<0) {  
-                System.out.println("Erreur : la ligne de la case est incorrecte"); 
-                valide = false;
-            }    
-            if (coord.colonne>=DIMENSION || coord.colonne<0) {
-                System.out.println("Erreur : la colonne de la case est incorrecte");
-                valide = false;
-            }
+            if (coord.ligne == Coord.VALEUR_INVALIDE && coord.colonne == Coord.VALEUR_INVALIDE) System.out.println("Erreur votre coup est incorecte");
+            else if (coord.ligne>=DIMENSION || coord.ligne<0) {  
+                    System.out.println("Erreur : la ligne de la case est incorrecte"); 
+                    valide = false;
+                }  else {
+                    if (coord.colonne>=DIMENSION || coord.colonne<0) {
+                        System.out.println("Erreur : la colonne de la case est incorrecte");
+                        valide = false;
+                    }
+                }  
             } while (!valide);
             return coord;
     }
@@ -50,8 +52,8 @@ public class JeuEchec extends Plateau{
 
             //récuperer coordonées de départ et d'arriver 
             this.afficherPlateau();
-            depart = getCoord("Rentrer les coordonées de votre pièce");
-            arriver = getCoord("Rentrer les coordonées de la case ciblé");
+            depart = getCoord("Rentrer les coordonées de votre pièce (colonne ligne) collé");
+            arriver = getCoord("Rentrer les coordonées de la case ciblé (colonne ligne) collé");
             KTerminal.effacer();
             //test différentes possibilités
             if (PieceEtat.VIDE == this.plateau[ depart.ligne ][ depart.colonne ].getCouleur()) { 
