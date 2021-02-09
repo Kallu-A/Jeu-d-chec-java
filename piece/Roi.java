@@ -7,7 +7,6 @@ import move.Move;
 public class Roi extends Piece {
    
     private boolean jamaisRoque = true;
-    private boolean echecMat = false;
 
     public static final short[][] VECTEUR_ROI = { {1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
 
@@ -23,15 +22,6 @@ public class Roi extends Piece {
 
     public void setRoqueJouer(){
         this.jamaisRoque = false;
-    }
-
-    public void setEchecMat(){
-        this.echecMat = true;
-    }
-
-
-    public boolean getEchecMat(){
-        return this.echecMat;
     }
 
     @Override

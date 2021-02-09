@@ -109,7 +109,12 @@ public class JeuEchec extends Plateau{
         KTerminal.effacer();
         do{
             this.jouerCoup();
-        } while (true);
+        } while (getRoiInfo(PieceEtat.NOIR) != null && getRoiInfo(PieceEtat.BLANC) != null );
+        short couleur = (short) getTour();
+        String couleurString;
+        if (couleur == PieceEtat.NOIR) couleurString = "blanc";
+        else couleurString = "noir";
+        System.out.println("Victoire du joueur "+couleurString);
     }
 
     /** incrémente le tour  */
