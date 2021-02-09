@@ -22,11 +22,14 @@ public class JeuEchec extends Plateau{
         Coord coord = new Coord();
         String coordString;
         do {
-            valide = true;
+            valide = false;
             coordString = KTerminal.getString(afficher);
             coord.setStringToCoord(coordString);
             //test validité
-            if (coord.ligne == Coord.VALEUR_INVALIDE && coord.colonne == Coord.VALEUR_INVALIDE) System.out.println("Erreur votre coup est incorecte");
+            if (coord.equals(Coord.COORD_INVALIDE)) {
+                System.out.println("Erreur votre coup est incorecte");
+                valide = false;
+            }
             else if (coord.ligne>=DIMENSION || coord.ligne<0) {  
                     System.out.println("Erreur : la ligne de la case est incorrecte"); 
                     valide = false;
@@ -34,7 +37,7 @@ public class JeuEchec extends Plateau{
                     if (coord.colonne>=DIMENSION || coord.colonne<0) {
                         System.out.println("Erreur : la colonne de la case est incorrecte");
                         valide = false;
-                    }
+                    } else valide = true;
                 }  
             } while (!valide);
             return coord;

@@ -7,7 +7,7 @@ public class Coord {
 
     public short ligne ,colonne ;
     static public final short VALEUR_INVALIDE = -1;
-
+        static public Coord COORD_INVALIDE = new Coord();
 
     public Coord(short ligne, short colonne){
         this.ligne=ligne;
@@ -39,7 +39,7 @@ public class Coord {
         this.ligne = (short)( setLigne -1);
         this.colonne = (short)( setColonne );
     }
-    
+     
     public String toString(){
         return "Coord avec ligne ="+this.ligne + " colonne ="+this.colonne;
     }
